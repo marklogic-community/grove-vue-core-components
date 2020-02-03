@@ -1,10 +1,13 @@
 // Import vue component
+import mlTreeFacet from './components/ml-tree-facet';
 import searchquerybuilder from './components/searchquerybuilder';
 
 // Declare install function executed by Vue.use()
 export function install(Vue) {
   if (install.installed) return;
   install.installed = true;
+  Vue.component(mlTreeFacet.mlTreeFacet.name, mlTreeFacet.mlTreeFacet);
+  Vue.component(mlTreeFacet.mlSubTree.name, mlTreeFacet.mlSubTree);
   Vue.component(
     searchquerybuilder.SearchQueryBuilder.name,
     searchquerybuilder.SearchQueryBuilder
@@ -41,4 +44,4 @@ if (GlobalVue) {
 }
 
 // To allow use as module (npm/webpack/etc.) export component
-export { searchquerybuilder };
+export { searchquerybuilder, mlTreeFacet };
