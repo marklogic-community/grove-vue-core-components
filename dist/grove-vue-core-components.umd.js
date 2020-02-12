@@ -1,11 +1,14 @@
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('vue-multiselect'), require('vue-multiselect/dist/vue-multiselect.min.css')) :
   typeof define === 'function' && define.amd ? define(['exports', 'vue-multiselect', 'vue-multiselect/dist/vue-multiselect.min.css'], factory) :
-  (global = global || self, factory(global.CoreComponents = {}, global.Multiselect));
+  (global = global || self, factory(global.CoreComponents = {}, global.MultiSelect));
 }(this, (function (exports, Multiselect) { 'use strict';
 
   Multiselect = Multiselect && Multiselect.hasOwnProperty('default') ? Multiselect['default'] : Multiselect;
 
+  //
+  //
+  //
   //
   //
   //
@@ -241,6 +244,7 @@
             "div",
             { class: _vm.nodes[id].highlight ? "ml-tree-highlight" : "" },
             [
+              _vm.nodes[id].children &&
               _vm.nodes[id].children.length &&
               (_vm.showEmpty || _vm.nodes[id].sum > (_vm.nodes[id].value || 0))
                 ? _c(
@@ -342,7 +346,9 @@
             ]
           ),
           _vm._v(" "),
-          !_vm.collapsed[id] && _vm.nodes[id].children.length
+          !_vm.collapsed[id] &&
+          _vm.nodes[id].children &&
+          _vm.nodes[id].children.length
             ? _c(
                 "div",
                 [
@@ -369,11 +375,11 @@
     /* style */
     var __vue_inject_styles__ = function (inject) {
       if (!inject) { return }
-      inject("data-v-76e1eb83_0", { source: "ul.ml-sub-tree[data-v-76e1eb83] {\n  list-style: none;\n}\nul.ml-sub-tree .ml-tree-highlight[data-v-76e1eb83] {\n  background-color: lightyellow;\n}\n", map: {"version":3,"sources":["ml-sub-tree.vue"],"names":[],"mappings":"AAAA;EACE,gBAAgB;AAClB;AACA;EACE,6BAA6B;AAC/B","file":"ml-sub-tree.vue","sourcesContent":["ul.ml-sub-tree {\n  list-style: none;\n}\nul.ml-sub-tree .ml-tree-highlight {\n  background-color: lightyellow;\n}\n"]}, media: undefined });
+      inject("data-v-4edd8a17_0", { source: "ul.ml-sub-tree[data-v-4edd8a17] {\n  list-style: none;\n}\nul.ml-sub-tree .ml-tree-highlight[data-v-4edd8a17] {\n  background-color: lightyellow;\n}\n", map: {"version":3,"sources":["ml-sub-tree.vue"],"names":[],"mappings":"AAAA;EACE,gBAAgB;AAClB;AACA;EACE,6BAA6B;AAC/B","file":"ml-sub-tree.vue","sourcesContent":["ul.ml-sub-tree {\n  list-style: none;\n}\nul.ml-sub-tree .ml-tree-highlight {\n  background-color: lightyellow;\n}\n"]}, media: undefined });
 
     };
     /* scoped */
-    var __vue_scope_id__ = "data-v-76e1eb83";
+    var __vue_scope_id__ = "data-v-4edd8a17";
     /* module identifier */
     var __vue_module_identifier__ = undefined;
     /* functional template */

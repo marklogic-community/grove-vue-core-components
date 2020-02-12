@@ -5,7 +5,8 @@
         <a
           href
           v-if="
-            nodes[id].children.length &&
+            nodes[id].children &&
+              nodes[id].children.length &&
               (showEmpty || nodes[id].sum > (nodes[id].value || 0))
           "
           v-on:click.prevent="toggle(id)"
@@ -24,7 +25,9 @@
           [{{ nodes[id].sum }}]</span
         >
       </div>
-      <div v-if="!collapsed[id] && nodes[id].children.length">
+      <div
+        v-if="!collapsed[id] && nodes[id].children && nodes[id].children.length"
+      >
         <ml-sub-tree
           :nodes="nodes"
           :start-ids="nodes[id].children"

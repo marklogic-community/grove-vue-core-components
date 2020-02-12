@@ -8,7 +8,7 @@ export default {
     name: 'CoreComponents',
     exports: 'named',
     globals: {
-      // none
+      'vue-multiselect': 'MultiSelect'
     }
   },
   plugins: [
@@ -19,7 +19,5 @@ export default {
     }),
     buble() // Transpile to ES5
   ],
-  external: [
-    // no external deps
-  ]
+  external: ['vue-multiselect']
 };
