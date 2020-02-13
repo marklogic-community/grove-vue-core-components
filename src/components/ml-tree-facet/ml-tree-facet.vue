@@ -39,6 +39,7 @@
         :start-ids="startIds"
         :on-click="onClick"
         :show-empty="showEmpty_"
+        :show-sums="showSums"
       ></ml-sub-tree>
     </div>
   </div>
@@ -84,6 +85,10 @@ export default {
     showEmpty: {
       type: Boolean,
       default: false
+    },
+    showSums: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -112,7 +117,9 @@ export default {
       startIds.forEach(function(id) {
         var node = nodes[id];
         var sum = node.children ? self.calculateSums(nodes, node.children) : 0;
-        sum = sum + (node.value || 0);
+        if (sum === 0) {
+          sum = sum + (node.value || 0);
+        }
         node.sum = sum;
         totalSum += sum;
       });

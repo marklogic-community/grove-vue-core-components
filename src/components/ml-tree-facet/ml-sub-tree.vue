@@ -21,9 +21,7 @@
           ><i class="fa fa-remove"></i
         ></a>
         <span v-show="nodes[id].value"> ({{ nodes[id].value }})</span>
-        <span v-show="nodes[id].sum > (nodes[id].value || 0)">
-          [{{ nodes[id].sum }}]</span
-        >
+        <span v-show="showSums && nodes[id].sum"> [{{ nodes[id].sum }}]</span>
       </div>
       <div
         v-if="!collapsed[id] && nodes[id].children && nodes[id].children.length"
@@ -63,6 +61,10 @@ export default {
       default: function() {}
     },
     showEmpty: {
+      type: Boolean,
+      default: false
+    },
+    showSums: {
       type: Boolean,
       default: false
     }
