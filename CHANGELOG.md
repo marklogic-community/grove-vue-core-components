@@ -1,5 +1,12 @@
 # Change Log
 
+## [0.2.2](https://github.com/marklogic-community/grove-vue-core-components/tree/0.2.2) (2020-02-13)
+[Full Changelog](https://github.com/marklogic-community/grove-vue-core-components/compare/0.2.1...0.2.2)
+
+**Implemented enhancements:**
+
+- Adjust tree facet sum logic [\#3](https://github.com/marklogic-community/grove-vue-core-components/issues/3)
+
 ## [0.2.1](https://github.com/marklogic-community/grove-vue-core-components/tree/0.2.1) (2020-02-12)
 [Full Changelog](https://github.com/marklogic-community/grove-vue-core-components/compare/0.2.0...0.2.1)
 
