@@ -40,8 +40,6 @@ import 'vue-multiselect/dist/vue-multiselect.min.css';
 //
 //
 //
-//
-//
 
 var script = {
   name: 'ml-sub-tree',
@@ -66,6 +64,10 @@ var script = {
       default: function() {}
     },
     showEmpty: {
+      type: Boolean,
+      default: false
+    },
+    showSums: {
       type: Boolean,
       default: false
     }
@@ -331,12 +333,12 @@ var __vue_render__ = function() {
                   {
                     name: "show",
                     rawName: "v-show",
-                    value: _vm.nodes[id].sum > (_vm.nodes[id].value || 0),
-                    expression: "nodes[id].sum > (nodes[id].value || 0)"
+                    value: _vm.showSums && _vm.nodes[id].sum,
+                    expression: "showSums && nodes[id].sum"
                   }
                 ]
               },
-              [_vm._v("\n        [" + _vm._s(_vm.nodes[id].sum) + "]")]
+              [_vm._v(" [" + _vm._s(_vm.nodes[id].sum) + "]")]
             )
           ]
         ),
@@ -370,11 +372,11 @@ __vue_render__._withStripped = true;
   /* style */
   var __vue_inject_styles__ = function (inject) {
     if (!inject) { return }
-    inject("data-v-4edd8a17_0", { source: "ul.ml-sub-tree[data-v-4edd8a17] {\n  list-style: none;\n}\nul.ml-sub-tree .ml-tree-highlight[data-v-4edd8a17] {\n  background-color: lightyellow;\n}\n", map: {"version":3,"sources":["ml-sub-tree.vue"],"names":[],"mappings":"AAAA;EACE,gBAAgB;AAClB;AACA;EACE,6BAA6B;AAC/B","file":"ml-sub-tree.vue","sourcesContent":["ul.ml-sub-tree {\n  list-style: none;\n}\nul.ml-sub-tree .ml-tree-highlight {\n  background-color: lightyellow;\n}\n"]}, media: undefined });
+    inject("data-v-6314b93b_0", { source: "ul.ml-sub-tree[data-v-6314b93b] {\n  list-style: none;\n}\nul.ml-sub-tree .ml-tree-highlight[data-v-6314b93b] {\n  background-color: lightyellow;\n}\n", map: {"version":3,"sources":["ml-sub-tree.vue"],"names":[],"mappings":"AAAA;EACE,gBAAgB;AAClB;AACA;EACE,6BAA6B;AAC/B","file":"ml-sub-tree.vue","sourcesContent":["ul.ml-sub-tree {\n  list-style: none;\n}\nul.ml-sub-tree .ml-tree-highlight {\n  background-color: lightyellow;\n}\n"]}, media: undefined });
 
   };
   /* scoped */
-  var __vue_scope_id__ = "data-v-4edd8a17";
+  var __vue_scope_id__ = "data-v-6314b93b";
   /* module identifier */
   var __vue_module_identifier__ = undefined;
   /* functional template */
@@ -434,6 +436,10 @@ var script$1 = {
     showEmpty: {
       type: Boolean,
       default: false
+    },
+    showSums: {
+      type: Boolean,
+      default: false
     }
   },
   data: function data() {
@@ -462,7 +468,9 @@ var script$1 = {
       startIds.forEach(function(id) {
         var node = nodes[id];
         var sum = node.children ? self.calculateSums(nodes, node.children) : 0;
-        sum = sum + (node.value || 0);
+        if (sum === 0) {
+          sum = sum + (node.value || 0);
+        }
         node.sum = sum;
         totalSum += sum;
       });
@@ -699,7 +707,8 @@ var __vue_render__$1 = function() {
                       nodes: _vm.nodes_,
                       "start-ids": _vm.startIds,
                       "on-click": _vm.onClick,
-                      "show-empty": _vm.showEmpty_
+                      "show-empty": _vm.showEmpty_,
+                      "show-sums": _vm.showSums
                     }
                   })
                 ],
@@ -716,11 +725,11 @@ __vue_render__$1._withStripped = true;
   /* style */
   var __vue_inject_styles__$1 = function (inject) {
     if (!inject) { return }
-    inject("data-v-3aec6c40_0", { source: ".ml-facet .facet-add-pos[data-v-3aec6c40],\n.ml-facet .facet-add-neg[data-v-3aec6c40] {\n  visibility: hidden;\n}\n.ml-facet span:hover > .facet-add-pos[data-v-3aec6c40],\n.ml-facet div:hover > .facet-add-neg[data-v-3aec6c40] {\n  visibility: visible !important;\n}\n.ml-facet form[data-v-3aec6c40] {\n  padding-bottom: 0;\n}\n", map: {"version":3,"sources":["ml-tree-facet.vue"],"names":[],"mappings":"AAAA;;EAEE,kBAAkB;AACpB;AACA;;EAEE,8BAA8B;AAChC;AACA;EACE,iBAAiB;AACnB","file":"ml-tree-facet.vue","sourcesContent":[".ml-facet .facet-add-pos,\n.ml-facet .facet-add-neg {\n  visibility: hidden;\n}\n.ml-facet span:hover > .facet-add-pos,\n.ml-facet div:hover > .facet-add-neg {\n  visibility: visible !important;\n}\n.ml-facet form {\n  padding-bottom: 0;\n}\n"]}, media: undefined });
+    inject("data-v-895187ca_0", { source: ".ml-facet .facet-add-pos[data-v-895187ca],\n.ml-facet .facet-add-neg[data-v-895187ca] {\n  visibility: hidden;\n}\n.ml-facet span:hover > .facet-add-pos[data-v-895187ca],\n.ml-facet div:hover > .facet-add-neg[data-v-895187ca] {\n  visibility: visible !important;\n}\n.ml-facet form[data-v-895187ca] {\n  padding-bottom: 0;\n}\n", map: {"version":3,"sources":["ml-tree-facet.vue"],"names":[],"mappings":"AAAA;;EAEE,kBAAkB;AACpB;AACA;;EAEE,8BAA8B;AAChC;AACA;EACE,iBAAiB;AACnB","file":"ml-tree-facet.vue","sourcesContent":[".ml-facet .facet-add-pos,\n.ml-facet .facet-add-neg {\n  visibility: hidden;\n}\n.ml-facet span:hover > .facet-add-pos,\n.ml-facet div:hover > .facet-add-neg {\n  visibility: visible !important;\n}\n.ml-facet form {\n  padding-bottom: 0;\n}\n"]}, media: undefined });
 
   };
   /* scoped */
-  var __vue_scope_id__$1 = "data-v-3aec6c40";
+  var __vue_scope_id__$1 = "data-v-895187ca";
   /* module identifier */
   var __vue_module_identifier__$1 = undefined;
   /* functional template */
