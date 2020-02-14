@@ -31,6 +31,8 @@
           :start-ids="nodes[id].children"
           :on-click="onClick"
           :show-empty="showEmpty"
+          :show-sums="showSums"
+          :sort="sort"
         ></ml-sub-tree>
       </div>
     </li>
@@ -67,21 +69,32 @@ export default {
     showSums: {
       type: Boolean,
       default: false
+    },
+    sort: {
+      type: Boolean,
+      default: true
     }
   },
   computed: {
     nonEmptystartIds() {
+      let arr = [];
       if (this.showEmpty) {
-        return this.startIds.filter(id => {
+        arr = this.startIds.filter(id => {
           const node = this.nodes[id];
           return node !== undefined;
         });
       } else {
-        return this.startIds.filter(id => {
+        arr = this.startIds.filter(id => {
           const node = this.nodes[id];
           return node && node.sum > 0;
         });
       }
+      arr.sort(function(a, b) {
+        return a.label && b.label
+          ? a.label.localeCompare(b.label)
+          : a.id.localeCompare(b.id);
+      });
+      return arr;
     }
   },
   methods: {

@@ -40,6 +40,7 @@
         :on-click="onClick"
         :show-empty="showEmpty_"
         :show-sums="showSums"
+        :sort="sort"
       ></ml-sub-tree>
     </div>
   </div>
@@ -89,6 +90,10 @@ export default {
     showSums: {
       type: Boolean,
       default: false
+    },
+    sort: {
+      type: Boolean,
+      default: true
     }
   },
   data() {
@@ -156,28 +161,30 @@ export default {
 
       var _highlightNodes = function(match, startIds) {
         var totalHit = false;
-        startIds.forEach(function(id) {
-          var node = self.nodes_[id];
-          var hit = node.children
-            ? _highlightNodes(match, node.children)
-            : false;
-          if (!hit) {
-            hit = node.label && match.test(node.label);
-          }
-          if (!hit) {
-            hit =
-              node.altLabels &&
-              node.altLabels.filter(function(label) {
-                return match.test(label);
-              }).length;
-          }
-          if (hit) {
-            self.$set(node, 'highlight', true);
-            totalHit = true;
-          } else {
-            self.$set(node, 'highlight', false);
-          }
-        });
+        if (startIds) {
+          startIds.forEach(function(id) {
+            var node = self.nodes_[id];
+            var hit = node.children
+              ? _highlightNodes(match, node.children)
+              : false;
+            if (!hit) {
+              hit = node.label && match.test(node.label);
+            }
+            if (!hit) {
+              hit =
+                node.altLabels &&
+                node.altLabels.filter(function(label) {
+                  return match.test(label);
+                }).length;
+            }
+            if (hit) {
+              self.$set(node, 'highlight', true);
+              totalHit = true;
+            } else {
+              self.$set(node, 'highlight', false);
+            }
+          });
+        }
         return totalHit;
       };
 
@@ -189,14 +196,15 @@ export default {
       }
     },
     init() {
-      if (this.facet !== undefined && Object.keys(this.nodes).length) {
-        var nodes = JSON.parse(JSON.stringify(this.nodes));
+      if (this.facet !== undefined && Object.keys(this.nodes_).length) {
         this.facet.facetValues.forEach(facetValue => {
-          nodes[facetValue.value].value = facetValue.count;
+          this.nodes_[facetValue.value].value = facetValue.count;
         });
-        this.calculateSums(nodes, this.startIds);
-        this.updateSuggestions(nodes);
-        this.nodes_ = nodes;
+        this.calculateSums(this.nodes_, this.startIds);
+        this.updateSuggestions(this.nodes_);
+
+        // let Vue know something changed
+        this.$set(this, 'nodes_', this.nodes_);
       }
     }
   },
@@ -212,7 +220,8 @@ export default {
     facet() {
       this.init();
     },
-    nodes() {
+    nodes(newNodes) {
+      this.nodes_ = JSON.parse(JSON.stringify(newNodes));
       this.init();
     }
   }
