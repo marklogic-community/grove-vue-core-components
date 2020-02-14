@@ -501,11 +501,13 @@
         return totalSum;
       },
       updateSuggestions: function updateSuggestions(nodes) {
+        var this$1 = this;
+
         var self = this;
         self.suggestionsList = [];
         Object.keys(nodes).forEach(function (id) {
           var node = nodes[id];
-          if (node.sum > 0) {
+          if (this$1.showEmpty_ || node.sum > 0) {
             if (node.label) {
               self.suggestionsList.push(node.label);
             }
@@ -569,9 +571,13 @@
         var this$1 = this;
 
         if (this.facet !== undefined && Object.keys(this.nodes_).length) {
-          this.facet.facetValues.forEach(function (facetValue) {
-            this$1.nodes_[facetValue.value].value = facetValue.count;
-          });
+          if (this.facet.facetValues) {
+            this.facet.facetValues.forEach(function (facetValue) {
+              if (this$1.nodes_[facetValue.value]) {
+                this$1.nodes_[facetValue.value].value = facetValue.count;
+              }
+            });
+          }
           this.calculateSums(this.nodes_, this.startIds);
           this.updateSuggestions(this.nodes_);
 
@@ -587,6 +593,7 @@
       showEmpty: function showEmpty(newEmpty) {
         if (newEmpty !== undefined) {
           this.showEmpty_ = newEmpty;
+          this.updateSuggestions(this.nodes_);
         }
       },
       facet: function facet() {
@@ -756,11 +763,11 @@
     /* style */
     var __vue_inject_styles__$1 = function (inject) {
       if (!inject) { return }
-      inject("data-v-005bd809_0", { source: ".ml-facet .facet-add-pos[data-v-005bd809],\n.ml-facet .facet-add-neg[data-v-005bd809] {\n  visibility: hidden;\n}\n.ml-facet span:hover > .facet-add-pos[data-v-005bd809],\n.ml-facet div:hover > .facet-add-neg[data-v-005bd809] {\n  visibility: visible !important;\n}\n.ml-facet form[data-v-005bd809] {\n  padding-bottom: 0;\n}\n", map: {"version":3,"sources":["ml-tree-facet.vue"],"names":[],"mappings":"AAAA;;EAEE,kBAAkB;AACpB;AACA;;EAEE,8BAA8B;AAChC;AACA;EACE,iBAAiB;AACnB","file":"ml-tree-facet.vue","sourcesContent":[".ml-facet .facet-add-pos,\n.ml-facet .facet-add-neg {\n  visibility: hidden;\n}\n.ml-facet span:hover > .facet-add-pos,\n.ml-facet div:hover > .facet-add-neg {\n  visibility: visible !important;\n}\n.ml-facet form {\n  padding-bottom: 0;\n}\n"]}, media: undefined });
+      inject("data-v-72871f89_0", { source: ".ml-facet .facet-add-pos[data-v-72871f89],\n.ml-facet .facet-add-neg[data-v-72871f89] {\n  visibility: hidden;\n}\n.ml-facet span:hover > .facet-add-pos[data-v-72871f89],\n.ml-facet div:hover > .facet-add-neg[data-v-72871f89] {\n  visibility: visible !important;\n}\n.ml-facet form[data-v-72871f89] {\n  padding-bottom: 0;\n}\n", map: {"version":3,"sources":["ml-tree-facet.vue"],"names":[],"mappings":"AAAA;;EAEE,kBAAkB;AACpB;AACA;;EAEE,8BAA8B;AAChC;AACA;EACE,iBAAiB;AACnB","file":"ml-tree-facet.vue","sourcesContent":[".ml-facet .facet-add-pos,\n.ml-facet .facet-add-neg {\n  visibility: hidden;\n}\n.ml-facet span:hover > .facet-add-pos,\n.ml-facet div:hover > .facet-add-neg {\n  visibility: visible !important;\n}\n.ml-facet form {\n  padding-bottom: 0;\n}\n"]}, media: undefined });
 
     };
     /* scoped */
-    var __vue_scope_id__$1 = "data-v-005bd809";
+    var __vue_scope_id__$1 = "data-v-72871f89";
     /* module identifier */
     var __vue_module_identifier__$1 = undefined;
     /* functional template */

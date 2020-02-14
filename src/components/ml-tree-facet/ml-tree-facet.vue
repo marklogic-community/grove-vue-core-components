@@ -135,7 +135,7 @@ export default {
       self.suggestionsList = [];
       Object.keys(nodes).forEach(id => {
         const node = nodes[id];
-        if (node.sum > 0) {
+        if (this.showEmpty_ || node.sum > 0) {
           if (node.label) {
             self.suggestionsList.push(node.label);
           }
@@ -197,9 +197,13 @@ export default {
     },
     init() {
       if (this.facet !== undefined && Object.keys(this.nodes_).length) {
-        this.facet.facetValues.forEach(facetValue => {
-          this.nodes_[facetValue.value].value = facetValue.count;
-        });
+        if (this.facet.facetValues) {
+          this.facet.facetValues.forEach(facetValue => {
+            if (this.nodes_[facetValue.value]) {
+              this.nodes_[facetValue.value].value = facetValue.count;
+            }
+          });
+        }
         this.calculateSums(this.nodes_, this.startIds);
         this.updateSuggestions(this.nodes_);
 
@@ -215,6 +219,7 @@ export default {
     showEmpty(newEmpty) {
       if (newEmpty !== undefined) {
         this.showEmpty_ = newEmpty;
+        this.updateSuggestions(this.nodes_);
       }
     },
     facet() {
