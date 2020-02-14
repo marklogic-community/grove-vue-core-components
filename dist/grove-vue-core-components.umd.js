@@ -487,42 +487,38 @@
         }
       },
       calculateSums: function calculateSums(nodes, startIds) {
-        var self = this;
         var totalSum = 0;
         startIds.forEach(function(id) {
           var node = nodes[id];
-          var sum = node.children ? self.calculateSums(nodes, node.children) : 0;
+          var sum = node.children ? this.calculateSums(nodes, node.children) : 0;
           if (sum === 0) {
             sum = sum + (node.value || 0);
           }
           node.sum = sum;
           totalSum += sum;
-        });
+        }, this);
         return totalSum;
       },
       updateSuggestions: function updateSuggestions(nodes) {
         var this$1 = this;
 
-        var self = this;
-        self.suggestionsList = [];
+        this.suggestionsList = [];
         Object.keys(nodes).forEach(function (id) {
           var node = nodes[id];
           if (this$1.showEmpty_ || node.sum > 0) {
             if (node.label) {
-              self.suggestionsList.push(node.label);
+              this$1.suggestionsList.push(node.label);
             }
             if (node.altLabels) {
               node.altLabels.forEach(function(label) {
-                self.suggestionsList.push(label);
+                this.suggestionsList.push(label);
               });
             }
           }
-        });
-        self.suggestionsList.sort();
+        }, this);
+        this.suggestionsList.sort();
       },
       highlightNodes: function highlightNodes(selected) {
-        var self = this;
-
         this.searchNode = selected !== undefined ? selected : this.searchNode;
 
         var noMatch = {
@@ -535,7 +531,7 @@
           var totalHit = false;
           if (startIds) {
             startIds.forEach(function(id) {
-              var node = self.nodes_[id];
+              var node = this.nodes_[id];
               var hit = node.children
                 ? _highlightNodes(match, node.children)
                 : false;
@@ -550,12 +546,12 @@
                   }).length;
               }
               if (hit) {
-                self.$set(node, 'highlight', true);
+                this.$set(node, 'highlight', true);
                 totalHit = true;
               } else {
-                self.$set(node, 'highlight', false);
+                this.$set(node, 'highlight', false);
               }
-            });
+            }, this);
           }
           return totalHit;
         };
@@ -576,7 +572,7 @@
               if (this$1.nodes_[facetValue.value]) {
                 this$1.nodes_[facetValue.value].value = facetValue.count;
               }
-            });
+            }, this);
           }
           this.calculateSums(this.nodes_, this.startIds);
           this.updateSuggestions(this.nodes_);
@@ -600,16 +596,19 @@
         this.init();
       },
       nodes: function nodes(newNodes) {
+        var this$1 = this;
+
         if (newNodes) {
           this.nodes_ = JSON.parse(JSON.stringify(newNodes));
-          Object.keys(this.nodes_).forEach(function (node) {
+          Object.keys(this.nodes_).forEach(function (key) {
+            var node = this$1.nodes_[key];
             if (node.children && !Array.isArray(node.children)) {
               node.children = [node.children];
             }
             if (node.altLabels && !Array.isArray(node.altLabels)) {
               node.altLabels = [node.altLabels];
             }
-          });
+          }, this);
           this.init();
         }
       }
@@ -773,11 +772,11 @@
     /* style */
     var __vue_inject_styles__$1 = function (inject) {
       if (!inject) { return }
-      inject("data-v-3f9fad9e_0", { source: ".ml-facet .facet-add-pos[data-v-3f9fad9e],\n.ml-facet .facet-add-neg[data-v-3f9fad9e] {\n  visibility: hidden;\n}\n.ml-facet span:hover > .facet-add-pos[data-v-3f9fad9e],\n.ml-facet div:hover > .facet-add-neg[data-v-3f9fad9e] {\n  visibility: visible !important;\n}\n.ml-facet form[data-v-3f9fad9e] {\n  padding-bottom: 0;\n}\n", map: {"version":3,"sources":["ml-tree-facet.vue"],"names":[],"mappings":"AAAA;;EAEE,kBAAkB;AACpB;AACA;;EAEE,8BAA8B;AAChC;AACA;EACE,iBAAiB;AACnB","file":"ml-tree-facet.vue","sourcesContent":[".ml-facet .facet-add-pos,\n.ml-facet .facet-add-neg {\n  visibility: hidden;\n}\n.ml-facet span:hover > .facet-add-pos,\n.ml-facet div:hover > .facet-add-neg {\n  visibility: visible !important;\n}\n.ml-facet form {\n  padding-bottom: 0;\n}\n"]}, media: undefined });
+      inject("data-v-345d2daa_0", { source: ".ml-facet .facet-add-pos[data-v-345d2daa],\n.ml-facet .facet-add-neg[data-v-345d2daa] {\n  visibility: hidden;\n}\n.ml-facet span:hover > .facet-add-pos[data-v-345d2daa],\n.ml-facet div:hover > .facet-add-neg[data-v-345d2daa] {\n  visibility: visible !important;\n}\n.ml-facet form[data-v-345d2daa] {\n  padding-bottom: 0;\n}\n", map: {"version":3,"sources":["ml-tree-facet.vue"],"names":[],"mappings":"AAAA;;EAEE,kBAAkB;AACpB;AACA;;EAEE,8BAA8B;AAChC;AACA;EACE,iBAAiB;AACnB","file":"ml-tree-facet.vue","sourcesContent":[".ml-facet .facet-add-pos,\n.ml-facet .facet-add-neg {\n  visibility: hidden;\n}\n.ml-facet span:hover > .facet-add-pos,\n.ml-facet div:hover > .facet-add-neg {\n  visibility: visible !important;\n}\n.ml-facet form {\n  padding-bottom: 0;\n}\n"]}, media: undefined });
 
     };
     /* scoped */
-    var __vue_scope_id__$1 = "data-v-3f9fad9e";
+    var __vue_scope_id__$1 = "data-v-345d2daa";
     /* module identifier */
     var __vue_module_identifier__$1 = undefined;
     /* functional template */

@@ -117,40 +117,36 @@ export default {
       }
     },
     calculateSums(nodes, startIds) {
-      var self = this;
       var totalSum = 0;
       startIds.forEach(function(id) {
         var node = nodes[id];
-        var sum = node.children ? self.calculateSums(nodes, node.children) : 0;
+        var sum = node.children ? this.calculateSums(nodes, node.children) : 0;
         if (sum === 0) {
           sum = sum + (node.value || 0);
         }
         node.sum = sum;
         totalSum += sum;
-      });
+      }, this);
       return totalSum;
     },
     updateSuggestions(nodes) {
-      var self = this;
-      self.suggestionsList = [];
+      this.suggestionsList = [];
       Object.keys(nodes).forEach(id => {
         const node = nodes[id];
         if (this.showEmpty_ || node.sum > 0) {
           if (node.label) {
-            self.suggestionsList.push(node.label);
+            this.suggestionsList.push(node.label);
           }
           if (node.altLabels) {
             node.altLabels.forEach(function(label) {
-              self.suggestionsList.push(label);
+              this.suggestionsList.push(label);
             });
           }
         }
-      });
-      self.suggestionsList.sort();
+      }, this);
+      this.suggestionsList.sort();
     },
     highlightNodes(selected) {
-      var self = this;
-
       this.searchNode = selected !== undefined ? selected : this.searchNode;
 
       var noMatch = {
@@ -163,7 +159,7 @@ export default {
         var totalHit = false;
         if (startIds) {
           startIds.forEach(function(id) {
-            var node = self.nodes_[id];
+            var node = this.nodes_[id];
             var hit = node.children
               ? _highlightNodes(match, node.children)
               : false;
@@ -178,12 +174,12 @@ export default {
                 }).length;
             }
             if (hit) {
-              self.$set(node, 'highlight', true);
+              this.$set(node, 'highlight', true);
               totalHit = true;
             } else {
-              self.$set(node, 'highlight', false);
+              this.$set(node, 'highlight', false);
             }
-          });
+          }, this);
         }
         return totalHit;
       };
@@ -202,7 +198,7 @@ export default {
             if (this.nodes_[facetValue.value]) {
               this.nodes_[facetValue.value].value = facetValue.count;
             }
-          });
+          }, this);
         }
         this.calculateSums(this.nodes_, this.startIds);
         this.updateSuggestions(this.nodes_);
@@ -228,14 +224,15 @@ export default {
     nodes(newNodes) {
       if (newNodes) {
         this.nodes_ = JSON.parse(JSON.stringify(newNodes));
-        Object.keys(this.nodes_).forEach(node => {
+        Object.keys(this.nodes_).forEach(key => {
+          let node = this.nodes_[key];
           if (node.children && !Array.isArray(node.children)) {
             node.children = [node.children];
           }
           if (node.altLabels && !Array.isArray(node.altLabels)) {
             node.altLabels = [node.altLabels];
           }
-        });
+        }, this);
         this.init();
       }
     }
