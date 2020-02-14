@@ -89,11 +89,9 @@ export default {
           return node && node.sum > 0;
         });
       }
-      arr.sort(function(a, b) {
-        return a.label && b.label
-          ? a.label.localeCompare(b.label)
-          : a.id.localeCompare(b.id);
-      });
+      if (this.sort) {
+        arr.sort();
+      }
       return arr;
     }
   },
