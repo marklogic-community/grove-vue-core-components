@@ -226,8 +226,18 @@ export default {
       this.init();
     },
     nodes(newNodes) {
-      this.nodes_ = JSON.parse(JSON.stringify(newNodes));
-      this.init();
+      if (newNodes) {
+        this.nodes_ = JSON.parse(JSON.stringify(newNodes));
+        Object.keys(this.nodes_).forEach(node => {
+          if (node.children && !Array.isArray(node.children)) {
+            node.children = [node.children];
+          }
+          if (node.altLabels && !Array.isArray(node.altLabels)) {
+            node.altLabels = [node.altLabels];
+          }
+        });
+        this.init();
+      }
     }
   }
 };
