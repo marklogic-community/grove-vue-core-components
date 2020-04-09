@@ -63,6 +63,10 @@ export default {
       type: Object,
       required: true
     },
+    values: {
+      type: Object,
+      required: false
+    },
     nodes: {
       type: Object,
       required: true
@@ -122,7 +126,7 @@ export default {
         var node = nodes[id];
         var sum = node.children ? this.calculateSums(nodes, node.children) : 0;
         if (sum === 0) {
-          sum = sum + (node.value || 0);
+          sum += node.value;
         }
         node.sum = sum;
         totalSum += sum;
@@ -192,19 +196,40 @@ export default {
       }
     },
     init() {
-      if (this.facet !== undefined && Object.keys(this.nodes_).length) {
-        if (this.facet.facetValues) {
+      if (Object.keys(this.nodes_).length) {
+        if (this.facet !== undefined && this.facet.facetValues) {
           this.facet.facetValues.forEach(facetValue => {
             if (this.nodes_[facetValue.value]) {
-              this.nodes_[facetValue.value].value = facetValue.count;
+              this.nodes_[facetValue.value].facetValue = facetValue.count;
             }
           }, this);
         }
+
+        if (this.values !== undefined) {
+          Object.keys(this.nodes).forEach(id => {
+            let node = this.nodes_[id];
+            if (this.values[id] !== undefined) {
+              node.value = this.values[id];
+            } else {
+              node.value = 0;
+            }
+          }, this);
+        } else {
+          Object.keys(this.nodes).forEach(id => {
+            let node = this.nodes_[id];
+            if (node.facetValue !== undefined) {
+              node.value = node.facetValue;
+            } else {
+              node.value = 0;
+            }
+          }, this);
+        }
+
         this.calculateSums(this.nodes_, this.startIds);
         this.updateSuggestions(this.nodes_);
 
         // let Vue know something changed
-        this.$set(this, 'nodes_', this.nodes_);
+        this.nodes_ = Object.assign({}, this.nodes_);
       }
     }
   },
@@ -219,6 +244,9 @@ export default {
       }
     },
     facet() {
+      this.init();
+    },
+    values() {
       this.init();
     },
     nodes(newNodes) {

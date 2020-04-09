@@ -96,7 +96,7 @@
         } else {
           arr = this.startIds.filter(function (id) {
             var node = this$1.nodes[id];
-            return node && node.sum > 0;
+            return node && (node.value > 0 || node.sum > 0);
           });
         }
         if (this.sort) {
@@ -390,11 +390,11 @@
     /* style */
     var __vue_inject_styles__ = function (inject) {
       if (!inject) { return }
-      inject("data-v-8a946250_0", { source: "ul.ml-sub-tree[data-v-8a946250] {\n  list-style: none;\n}\nul.ml-sub-tree .ml-tree-highlight[data-v-8a946250] {\n  background-color: lightyellow;\n}\n", map: {"version":3,"sources":["ml-sub-tree.vue"],"names":[],"mappings":"AAAA;EACE,gBAAgB;AAClB;AACA;EACE,6BAA6B;AAC/B","file":"ml-sub-tree.vue","sourcesContent":["ul.ml-sub-tree {\n  list-style: none;\n}\nul.ml-sub-tree .ml-tree-highlight {\n  background-color: lightyellow;\n}\n"]}, media: undefined });
+      inject("data-v-b016c8e8_0", { source: "ul.ml-sub-tree[data-v-b016c8e8] {\n  list-style: none;\n}\nul.ml-sub-tree .ml-tree-highlight[data-v-b016c8e8] {\n  background-color: lightyellow;\n}\n", map: {"version":3,"sources":["ml-sub-tree.vue"],"names":[],"mappings":"AAAA;EACE,gBAAgB;AAClB;AACA;EACE,6BAA6B;AAC/B","file":"ml-sub-tree.vue","sourcesContent":["ul.ml-sub-tree {\n  list-style: none;\n}\nul.ml-sub-tree .ml-tree-highlight {\n  background-color: lightyellow;\n}\n"]}, media: undefined });
 
     };
     /* scoped */
-    var __vue_scope_id__ = "data-v-8a946250";
+    var __vue_scope_id__ = "data-v-b016c8e8";
     /* module identifier */
     var __vue_module_identifier__ = undefined;
     /* functional template */
@@ -430,6 +430,10 @@
       facet: {
         type: Object,
         required: true
+      },
+      values: {
+        type: Object,
+        required: false
       },
       nodes: {
         type: Object,
@@ -490,7 +494,7 @@
           var node = nodes[id];
           var sum = node.children ? this.calculateSums(nodes, node.children) : 0;
           if (sum === 0) {
-            sum = sum + (node.value || 0);
+            sum += node.value;
           }
           node.sum = sum;
           totalSum += sum;
@@ -564,19 +568,40 @@
       init: function init() {
         var this$1 = this;
 
-        if (this.facet !== undefined && Object.keys(this.nodes_).length) {
-          if (this.facet.facetValues) {
+        if (Object.keys(this.nodes_).length) {
+          if (this.facet !== undefined && this.facet.facetValues) {
             this.facet.facetValues.forEach(function (facetValue) {
               if (this$1.nodes_[facetValue.value]) {
-                this$1.nodes_[facetValue.value].value = facetValue.count;
+                this$1.nodes_[facetValue.value].facetValue = facetValue.count;
               }
             }, this);
           }
+
+          if (this.values !== undefined) {
+            Object.keys(this.nodes).forEach(function (id) {
+              var node = this$1.nodes_[id];
+              if (this$1.values[id] !== undefined) {
+                node.value = this$1.values[id];
+              } else {
+                node.value = 0;
+              }
+            }, this);
+          } else {
+            Object.keys(this.nodes).forEach(function (id) {
+              var node = this$1.nodes_[id];
+              if (node.facetValue !== undefined) {
+                node.value = node.facetValue;
+              } else {
+                node.value = 0;
+              }
+            }, this);
+          }
+
           this.calculateSums(this.nodes_, this.startIds);
           this.updateSuggestions(this.nodes_);
 
           // let Vue know something changed
-          this.$set(this, 'nodes_', this.nodes_);
+          this.nodes_ = Object.assign({}, this.nodes_);
         }
       }
     },
@@ -591,6 +616,9 @@
         }
       },
       facet: function facet() {
+        this.init();
+      },
+      values: function values() {
         this.init();
       },
       nodes: function nodes(newNodes) {
@@ -770,11 +798,11 @@
     /* style */
     var __vue_inject_styles__$1 = function (inject) {
       if (!inject) { return }
-      inject("data-v-345d2daa_0", { source: ".ml-facet .facet-add-pos[data-v-345d2daa],\n.ml-facet .facet-add-neg[data-v-345d2daa] {\n  visibility: hidden;\n}\n.ml-facet span:hover > .facet-add-pos[data-v-345d2daa],\n.ml-facet div:hover > .facet-add-neg[data-v-345d2daa] {\n  visibility: visible !important;\n}\n.ml-facet form[data-v-345d2daa] {\n  padding-bottom: 0;\n}\n", map: {"version":3,"sources":["ml-tree-facet.vue"],"names":[],"mappings":"AAAA;;EAEE,kBAAkB;AACpB;AACA;;EAEE,8BAA8B;AAChC;AACA;EACE,iBAAiB;AACnB","file":"ml-tree-facet.vue","sourcesContent":[".ml-facet .facet-add-pos,\n.ml-facet .facet-add-neg {\n  visibility: hidden;\n}\n.ml-facet span:hover > .facet-add-pos,\n.ml-facet div:hover > .facet-add-neg {\n  visibility: visible !important;\n}\n.ml-facet form {\n  padding-bottom: 0;\n}\n"]}, media: undefined });
+      inject("data-v-0090208e_0", { source: ".ml-facet .facet-add-pos[data-v-0090208e],\n.ml-facet .facet-add-neg[data-v-0090208e] {\n  visibility: hidden;\n}\n.ml-facet span:hover > .facet-add-pos[data-v-0090208e],\n.ml-facet div:hover > .facet-add-neg[data-v-0090208e] {\n  visibility: visible !important;\n}\n.ml-facet form[data-v-0090208e] {\n  padding-bottom: 0;\n}\n", map: {"version":3,"sources":["ml-tree-facet.vue"],"names":[],"mappings":"AAAA;;EAEE,kBAAkB;AACpB;AACA;;EAEE,8BAA8B;AAChC;AACA;EACE,iBAAiB;AACnB","file":"ml-tree-facet.vue","sourcesContent":[".ml-facet .facet-add-pos,\n.ml-facet .facet-add-neg {\n  visibility: hidden;\n}\n.ml-facet span:hover > .facet-add-pos,\n.ml-facet div:hover > .facet-add-neg {\n  visibility: visible !important;\n}\n.ml-facet form {\n  padding-bottom: 0;\n}\n"]}, media: undefined });
 
     };
     /* scoped */
-    var __vue_scope_id__$1 = "data-v-345d2daa";
+    var __vue_scope_id__$1 = "data-v-0090208e";
     /* module identifier */
     var __vue_module_identifier__$1 = undefined;
     /* functional template */

@@ -86,7 +86,7 @@ export default {
       } else {
         arr = this.startIds.filter(id => {
           const node = this.nodes[id];
-          return node && node.sum > 0;
+          return node && (node.value > 0 || node.sum > 0);
         });
       }
       if (this.sort) {

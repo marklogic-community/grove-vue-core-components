@@ -1,6 +1,14 @@
 # Change Log
 
-## [0.2.3](https://github.com/marklogic-community/grove-vue-core-components/tree/0.2.3) (2020-02-14)
+## [Unreleased](https://github.com/marklogic-community/grove-vue-core-components/tree/HEAD)
+
+[Full Changelog](https://github.com/marklogic-community/grove-vue-core-components/compare/0.2.3...HEAD)
+
+**Implemented enhancements:**
+
+- Allow providing node values separately [\#6](https://github.com/marklogic-community/grove-vue-core-components/issues/6)
+
+## [0.2.3](https://github.com/marklogic-community/grove-vue-core-components/tree/0.2.3) (2020-04-09)
 [Full Changelog](https://github.com/marklogic-community/grove-vue-core-components/compare/0.2.2...0.2.3)
 
 **Implemented enhancements:**
