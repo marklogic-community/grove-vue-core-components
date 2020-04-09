@@ -1,8 +1,7 @@
 # Change Log
 
-## [Unreleased](https://github.com/marklogic-community/grove-vue-core-components/tree/HEAD)
-
-[Full Changelog](https://github.com/marklogic-community/grove-vue-core-components/compare/0.2.3...HEAD)
+## [0.2.4](https://github.com/marklogic-community/grove-vue-core-components/tree/0.2.4) (2020-04-09)
+[Full Changelog](https://github.com/marklogic-community/grove-vue-core-components/compare/0.2.3...0.2.4)
 
 **Implemented enhancements:**
 
