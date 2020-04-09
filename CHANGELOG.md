@@ -1,5 +1,16 @@
 # Change Log
 
+## [0.2.3](https://github.com/marklogic-community/grove-vue-core-components/tree/0.2.3) (2020-02-14)
+[Full Changelog](https://github.com/marklogic-community/grove-vue-core-components/compare/0.2.2...0.2.3)
+
+**Implemented enhancements:**
+
+- Sort tree items by default [\#4](https://github.com/marklogic-community/grove-vue-core-components/issues/4)
+
+**Fixed bugs:**
+
+- Facet values override nodes values [\#5](https://github.com/marklogic-community/grove-vue-core-components/issues/5)
+
 ## [0.2.2](https://github.com/marklogic-community/grove-vue-core-components/tree/0.2.2) (2020-02-13)
 [Full Changelog](https://github.com/marklogic-community/grove-vue-core-components/compare/0.2.1...0.2.2)
 
